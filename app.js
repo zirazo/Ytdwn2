@@ -21,7 +21,7 @@ app.get('/download', async (req, res) => {
     const totalSize = parseInt(videoFormat.contentLength, 10);
     const progressBar = new progress('[:bar] :percent :etas', {
       total: totalSize,
-      width: 60,
+      width: 20,
       clear: true,
     });
 
