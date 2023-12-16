@@ -1,12 +1,8 @@
 // app.js
 const express = require('express');
 const ytdl = require('ytdl-core');
-const axios = require('axios');
+const axios = require('axios'); // Add Axios for HTTP requests
 const progress = require('progress');
-const dotenv = require('dotenv'); // Import dotenv
-
-dotenv.config(); // Load environment variables
-
 const app = express();
 const PORT = 3000;
 
@@ -25,7 +21,7 @@ app.get('/download', async (req, res) => {
 
     // Fetch video title from YouTube API
     const videoId = info.videoDetails.videoId;
-    const apiKey = process.env.AIzaSyDF0UV7UA-XjlfViwiO_c3Ej0qIl51nG5o; // Use environment variable
+    const apiKey = 'AIzaSyDF0UV7UA-XjlfViwiO_c3Ej0qIl51nG5o'; // Replace with your YouTube Data API key
     const apiUrl = `https://www.googleapis.com/youtube/v3/videos?id=${videoId}&key=${apiKey}&part=snippet`;
 
     const response = await axios.get(apiUrl);
@@ -41,7 +37,7 @@ app.get('/download', async (req, res) => {
     const totalSize = parseInt(videoFormat.contentLength, 10);
     const progressBar = new progress('[:bar] :percent :etas', {
       total: totalSize,
-      width: 20,
+      width: 40,
       clear: true,
     });
 
