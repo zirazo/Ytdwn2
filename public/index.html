@@ -61,7 +61,10 @@
       const titleContainer = document.getElementById('title-container');
 
       // Extract video ID from the URL
-      const videoId = url.match(/[?&]v=([^&]+)/)[1];
+      const videoIdMatch = url.match(/[?&]v=([^&]+)/);
+      const videoId = videoIdMatch ? videoIdMatch[1] : null;
+
+      if (videoId) {
 
       // Display the thumbnail
       thumbnailContainer.innerHTML = `<img src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg" alt="Thumbnail">`;
