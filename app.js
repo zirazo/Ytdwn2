@@ -1,9 +1,8 @@
-// app.js
 const express = require('express');
 const ytdl = require('ytdl-core');
 const progress = require('progress');
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.static('public'));
 
