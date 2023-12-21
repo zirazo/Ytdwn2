@@ -53,31 +53,43 @@
   </footer>
 
   <script>
-    async function showThumbnailAndTitle(event) {
-      event.preventDefault(); // Prevent the form from submitting
+  async function showThumbnailAndTitle(event) {
+  event.preventDefault(); // Prevent the form from submitting
 
-      const url = document.getElementById('url').value;
-      const thumbnailContainer = document.getElementById('thumbnail-container');
-      const titleContainer = document.getElementById('title-container');
+  const url = document.getElementById('url').value;
+  const thumbnailContainer = document.getElementById('thumbnail-container');
+  const titleContainer = document.getElementById('title-container');
 
-      // Extract video ID from the URL
-      const videoId = url.match(/[?&]v=([^&]+)/)[1];
+  // Extract video ID from the URL
+  const videoId = url.match(/[?&]v=([^&]+)/)[1];
 
-      // Display the thumbnail
-      thumbnailContainer.innerHTML = `<img src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg" alt="Thumbnail">`;
+  // Display the thumbnail
+  thumbnailContainer.innerHTML = `<img src="https://img.youtube.com/vi/${videoId}/mqdefault.jpg" alt="Thumbnail">`;
 
-      // Fetch video title from the server
-      const response = await fetch(`/download?url=${url}&format=highest`);
+  try {
+    // Fetch video title from the server
+    const response = await fetch(`/download?url=${url}&format=highest`);
+    
+    // Check if the content-disposition header is available
+    if (response.headers.has('content-disposition')) {
       const contentDisposition = response.headers.get('content-disposition');
       const [, videoTitle] = contentDisposition.match(/filename="([^"]+)"/);
 
       // Display the video title
       titleContainer.innerHTML = `<p>Title: ${videoTitle}</p>`;
-
-      // Submit the form programmatically
-      const downloadForm = document.getElementById('downloadForm');
-      downloadForm.submit();
+    } else {
+      titleContainer.innerHTML = '<p>Title: Not Available</p>';
     }
+
+    // Submit the form programmatically
+    const downloadForm = document.getElementById('downloadForm');
+    downloadForm.submit();
+  } catch (error) {
+    console.error('Error fetching video title:', error);
+    titleContainer.innerHTML = '<p>Error fetching video title</p>';
+  }
+}
+
   </script>
 </body>
 </html>
