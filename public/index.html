@@ -10,8 +10,6 @@
   <meta name="description" content="Download YouTube videos with this simple YouTube Downloader. Choose the quality and start downloading.">
   <link rel="stylesheet" href="/index.css">
   <title>YouTube Video Downloader</title>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5148949743697465"
-     crossorigin="anonymous"></script>
      <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JDQE45L8V1"></script>
 <script>
@@ -61,7 +59,24 @@
       const titleContainer = document.getElementById('title-container');
 
       // Extract video ID from the URL
-  
+  const axios = require('axios');
+
+const options = {
+  method: 'GET',
+  url: 'https://ytstream-download-youtube-videos.p.rapidapi.com/dl',
+  params: {id: videoId},
+  headers: {
+    'X-RapidAPI-Key': '992c4a3c24msh3e40565ff4702eap152816jsn207591b3f6bb',
+    'X-RapidAPI-Host': 'ytstream-download-youtube-videos.p.rapidapi.com'
+  }
+};
+
+try {
+	const response = await axios.request(options);
+	console.log(response.data);
+} catch (error) {
+	console.error(error);
+}
 
         // Extract video ID from the URL
         const videoId = url.match(/[?&]v=([^&]+)/)[1];
